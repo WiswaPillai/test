@@ -3,29 +3,29 @@ steps:
     entrypoint: 'bash'
     args: ['-c', 'git clone https://github.com/WiswaPillai/test.git']
 
-    # Install Node dependencies and build (if needed)
   - name: 'gcr.io/cloud-builders/npm'
     dir: 'test'
     args: ['install']
- 
 
-
-  - name: 'gcr.io/cloud-builders/bash'
-    secretEnv: ['aws-ec2-private-key'] 
+  - name: 'ubuntu'
+    secretEnv: ['aws-ec2-private-key']
     entrypoint: 'bash'
     args:
       - -c
       - |
-        echo "$$aws-ec2-private-key" > ec2_key.pem
+        apt-get update && apt-get install -y openssh-client
+
+        echo "$aws-ec2-private-key" > ec2_key.pem
         chmod 600 ec2_key.pem
+
         # Copy project files to EC2
-        scp -i ec2_key.pem -o StrictHostKeyChecking=no -r test gcpuser@3.111.188.92:/home/ec2-user/app
+        scp -i ec2_key.pem -o StrictHostKeyChecking=no -r test gcpuser@3.111.188.92:/home/gcpuser/app
         echo 'Files copied to EC2 instance.'
 
         ssh -i ec2_key.pem -o StrictHostKeyChecking=no gcpuser@3.111.188.92 '
-        cd /var/www/app &&
-        git pull origin main &&
-        docker-compose up -d --build
+          cd /var/www/app &&
+          git pull origin main &&
+          docker-compose up -d --build
         '
 
 availableSecrets:
@@ -35,8 +35,3 @@ availableSecrets:
 
 options:
   logging: CLOUD_LOGGING_ONLY
-
-
-
-
-  
