@@ -4,12 +4,12 @@ steps:
     args: ['-c', 'git clone https://github.com/WiswaPillai/test.git']
  
   - name: 'gcr.io/cloud-builders/ssh'
-    secretEnv: ['EC2_KEY'] 
+    secretEnv: ['aws-ec2-private-key'] 
     entrypoint: 'bash'
     args:
       - -c
       - |
-        echo "$EC2_KEY" > ec2_key.pem
+        echo "$$aws-ec2-private-key" > ec2_key.pem
         chmod 600 ec2_key.pem
         ssh -i ec2_key.pem -o StrictHostKeyChecking=no gcpuser@3.111.188.92 '
         echo "Clone repository and run script on EC2 instance"
