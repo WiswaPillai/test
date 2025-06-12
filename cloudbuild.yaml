@@ -1,16 +1,18 @@
 steps:
-  - name: 'ubuntu'
+  - name: 'gcr.io/cloud-builders/git'
     entrypoint: 'bash'
-    args: ['-c', 'echo "$$EC2_KEY" > /dev/null']
-
-  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['-c', 'git clone https://github.com/WiswaPillai/test.git']
+ 
+  - name: 'gcr.io/cloud-builders/ssh'
+    env:
+      - 'EC2_KEY'
     entrypoint: 'bash'
     args:
-      - '-c'
+      - -c
       - |
-        echo "$$EC2_KEY" > id_rsa.pem
-        chmod 600 id_rsa.pem
-        ssh -o StrictHostKeyChecking=no -i id_rsa.pem gcpuser@3.111.188.92 '
+        echo "$EC2_KEY" > ec2_key.pem
+        chmod 600 ec2_key.pem
+        ssh -i ec2_key.pem -o StrictHostKeyChecking=no gcpuser@3.111.188.92 '
           cd /var/www/app &&
           git pull origin main &&
           docker-compose up -d --build
@@ -23,3 +25,8 @@ availableSecrets:
 
 options:
   logging: CLOUD_LOGGING_ONLY
+
+
+
+
+  
