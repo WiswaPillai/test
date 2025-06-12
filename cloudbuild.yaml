@@ -8,9 +8,9 @@ steps:
     args:
       - '-c'
       - |
-        echo "$$EC2_KEY" > id_rsa
-        chmod 600 id_rsa
-        ssh -o StrictHostKeyChecking=no -i id_rsa gcpuser@3.111.188.92 '
+        echo "$$EC2_KEY" > id_rsa.pem
+        chmod 600 id_rsa.pem
+        ssh -o StrictHostKeyChecking=no -i id_rsa.pem gcpuser@3.111.188.92 '
           cd /var/www/app &&
           git pull origin main &&
           docker-compose up -d --build
