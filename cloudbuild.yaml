@@ -2,8 +2,15 @@ steps:
   - name: 'gcr.io/cloud-builders/git'
     entrypoint: 'bash'
     args: ['-c', 'git clone https://github.com/WiswaPillai/test.git']
+
+    # Install Node dependencies and build (if needed)
+  - name: 'gcr.io/cloud-builders/npm'
+    dir: 'test'
+    args: ['install']
  
-  - name: 'gcr.io/cloud-builders/ssh'
+
+
+  - name: 'gcr.io/cloud-builders/bash'
     secretEnv: ['aws-ec2-private-key'] 
     entrypoint: 'bash'
     args:
@@ -11,6 +18,10 @@ steps:
       - |
         echo "$$aws-ec2-private-key" > ec2_key.pem
         chmod 600 ec2_key.pem
+        # Copy project files to EC2
+        scp -i ec2_key.pem -o StrictHostKeyChecking=no -r test gcpuser@3.111.188.92:/home/ec2-user/app
+        echo 'Files copied to EC2 instance.'
+
         ssh -i ec2_key.pem -o StrictHostKeyChecking=no gcpuser@3.111.188.92 '
         cd /var/www/app &&
         git pull origin main &&
