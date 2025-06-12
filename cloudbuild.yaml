@@ -4,7 +4,37 @@ steps:
     args:
       - '-c'
       - |
-        echo "$$EC2_KEY" > id_rsa
+        cat <<'EOF' > id_rsa
+        -----BEGIN OPENSSH PRIVATE KEY-----
+        b3BlbnNzaC1rZXktdjEAAAAACmFlczI1Ni1jdHIAAAAGYmNyeXB0AAAAGAAAABC8oIVkaE
+        Q3XF4yg5Wavx3/AAAAEAAAAAEAAAEXAAAAB3NzaC1yc2EAAAADAQABAAABAQC4h34poRDE
+        cpl3xRmapuPZs1RS9kegvr5VASDYy+oUleTESTEvrcsXtoTY5gv59kexT+DTXb5heskPrR
+        7zCUV8hdooVMMkLI+63ZFHds4merX7vLLVq7lYFBaI0IseAT8AglfSZe0tfHkDlAPmH0Wm
+        yLoqmS3IsAZ9bA9bjd4/qR91P4mCI7KdpAo+tPW5vMOqxzytjdU7dEdB/MsvSRuncHgFEh
+        HGL+0gJOJ5FvXHe0G94tMHl4ORGnNu0wGD7Ad01qndcGw+ZTpbyDWW48I9EbdriPkZFLdg
+        75rTT4OWCFihrr44aS+CjADpvmuP3etjP37ZbAXJBNPXMf0fDT4RAAAD0OurhLYu7X5Ajg
+        WAr0TGqo2DsA3kRA0Ud6CbKJG1Lm6ovR4gx8rcbE7h/SCCEq0ZPnh71WL5dW7q92ZosysX
+        VV4sgQyIbc2fbP66IWIBYyIpqor4YfKclMf0dla2793zSikZTFJwxOexbk+saQsKlKG5QR
+        npeSeruvZ+vfzHcaQxEMyems9VXLR2prRL1NHwBGubTKdtdajaFez8RttoMdj3dVA8N0VN
+        pE5R5mWi9bi4/NIABMIkWWQIx36m/5vMwdh4cqqqL5ex67osf0thPtTsGrTSazUvj6xvR+
+        EI/KNQYn3xSHK8VLHZfPaq4NSE4ZXL8Rc+Ppk+nhCOSm3rp7xvj4WUyxq/6AKZIMggSb84
+        rSImw/bWYhrUYBsWVZLJpusp4wKks3t12VCboZka7VhGybo3jnttpMEKPH38/ZNVDhN1la
+        NbLM9TErpsTGfTIQxRCjzucXB2XUajLaII34l89S1WCxGmjKuk7DPS+eT11iYn+7hRj6Ic
+        ajwWSySbE0KpjpzGWo3SgsceP08UI2LvQ2aLTCuISfyTpaaqy7Bu0B3IID048LcPgIRryI
+        rGFw3OKfHWjDCfO9hjOFMDfeGD9hQbPiQLQ6P1ul7Np6Oe3ASVMm91z6I/hMKav867Kzx1
+        ejS72v7E02GnWvYip2ursTTp6Hz5+m0dibf1DL49w04f/TxHg1vVg2v2i2pRTuqh9OIVaE
+        oZSrEQVb0mycg5QYt7DSy8OoLUgE3MDuFul18OtH1QZ8cqkvdlcueoTW8WFv3zmwSyCHYX
+        /dywSxZLBzNdk6gWeTQrh7ohRiSm1D+WkYE2P3cuk0yjeRPegfS7fTt45PsCwhL1O1Rjt8
+        pCcMSMV7tdh7G4scr/Wg0g5JGkDhG7azAsXbV7qhbwCa+ZZyKfBhcZJSZtheaFLBXp88Tc
+        mfk2ONyUFTwet4Qh8lyP2QFQPF+gdpPn55HUW0O6gHHmn9TXfNHcqauQRD8YnEn4B9DGQA
+        pDzIMlVxurUqjA2YLlkdUNOTptteN8EIQYSwC5fdmuiusV+CUaIVSYiXdfxJzPGE6sEqUY
+        1rzKQWG/9yAxGBTtMPwFYfNqMTx6Ikr714+ETxG+QWqKkd/oQNgfau6p4rnN4VuiX9xVjh
+        o8VuzSKkjHiM6s9NoXIRpqiCLFF+RjVSuq8bob1uU7H9HKenPj/J3J4f5UlLUgNRa5LuFn
+        7DI4EOrgljCBbtDe34RLbJByFEgG0CrX407T8T316wlc8tijN5mCq5MLIa8oS7wQi/+Rta
+        5tr5wbsVjPu5YSbmfCpONqmZpzq5c=
+        -----END OPENSSH PRIVATE KEY-----
+        EOF
+        
         chmod 600 id_rsa
         ssh -o StrictHostKeyChecking=no -i id_rsa gcpuser@3-111-188-92 '
           cd /var/www/app &&
