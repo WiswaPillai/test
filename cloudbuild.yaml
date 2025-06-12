@@ -6,7 +6,7 @@ steps:
       - |
         echo "$$EC2_KEY" > id_rsa
         chmod 600 id_rsa
-        ssh -o StrictHostKeyChecking=no -i id_rsa gcpuser@3-111-188-92'
+        ssh -o StrictHostKeyChecking=no -i id_rsa gcpuser@3-111-188-92 '
           cd /var/www/app &&
           git pull origin main &&
           docker-compose up -d --build
