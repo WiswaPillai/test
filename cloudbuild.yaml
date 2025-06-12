@@ -1,0 +1,18 @@
+steps:
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        echo "$$EC2_KEY" > id_rsa
+        chmod 600 id_rsa
+        ssh -o StrictHostKeyChecking=no -i id_rsa ec2-user@<EC2_PUBLIC_IP> '
+          cd /var/www/app &&
+          git pull origin main &&
+          docker-compose up -d --build
+        '
+
+secrets:
+  - kmsKeyName: projects/<PROJECT_ID>/locations/global/keyRings/<RING>/cryptoKeys/<KEY>
+    secretEnv: 
+      EC2_KEY: aws-ec2-private-key
