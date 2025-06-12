@@ -12,7 +12,7 @@ steps:
           docker-compose up -d --build
         '
 
-secrets:
-  - kmsKeyName: projects/<PROJECT_ID>/locations/global/keyRings/<RING>/cryptoKeys/<KEY>
-    secretEnv: 
-      EC2_KEY: aws-ec2-private-key
+availableSecrets:
+  secretManager:
+    - versionName: projects/common-tools-265603/secrets/aws-ec2-private-key/versions/latest
+      env: EC2_KEY
