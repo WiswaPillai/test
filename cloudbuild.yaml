@@ -12,8 +12,9 @@ steps:
         echo "$$aws-ec2-private-key" > ec2_key.pem
         chmod 600 ec2_key.pem
         ssh -i ec2_key.pem -o StrictHostKeyChecking=no gcpuser@3.111.188.92 '
-        echo "Clone repository and run script on EC2 instance"
-        exit 0
+        cd /var/www/app &&
+        git pull origin main &&
+        docker-compose up -d --build
         '
 
 availableSecrets:
