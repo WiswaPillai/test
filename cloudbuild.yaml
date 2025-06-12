@@ -19,7 +19,7 @@ steps:
 availableSecrets:
   secretManager:
     - versionName: projects/common-tools-265603/secrets/aws-ec2-private-key/versions/latest
-      env: EC2_KEY
+      env: aws-ec2-private-key
 
 options:
   logging: CLOUD_LOGGING_ONLY
