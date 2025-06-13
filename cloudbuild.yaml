@@ -21,11 +21,11 @@ steps:
 
         # Copy project files to EC2'
         echo 'Copying files to EC2 instance...'
-        scp -i ec2_key.pem -o StrictHostKeyChecking=no -r test gcpuser@3.111.188.92:/home/gcpuser/app
+        scp -i ec2_key.pem -o StrictHostKeyChecking=no -r test gcpuser@ec2-3-111-188-92.ap-south-1.compute.amazonaws.com:/home/gcpuser/app
         echo 'Files copied to EC2 instance.'
 
         echo 'Running deploy commands on EC2...'
-        ssh -i ec2_key.pem -o StrictHostKeyChecking=no gcpuser@3.111.188.92 <<EOF
+        ssh -i ec2_key.pem -o StrictHostKeyChecking=no gcpuser@ec2-3-111-188-92.ap-south-1.compute.amazonaws.com <<EOF
           cd /home/gcpuser/app
           npm install
           echo "Deployment completed successfully."
