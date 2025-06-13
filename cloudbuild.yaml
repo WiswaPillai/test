@@ -18,12 +18,12 @@ steps:
         echo "$aws-ec2-private-key" > ec2_key.pem
         chmod 600 ec2_key.pem
 
-        # Copy project files to EC2
+        # Copy project files to EC2'
+        echo 'Copying files to EC2 instance...'
         scp -i ec2_key.pem -o StrictHostKeyChecking=no -r test gcpuser@3.111.188.92:/home/gcpuser/app
         echo 'Files copied to EC2 instance.'
 
         ssh -i ec2_key.pem -o StrictHostKeyChecking=no gcpuser@3.111.188.92 '
-          cd /var/www/app &&
           git pull origin main &&
           docker-compose up -d --build
         '
