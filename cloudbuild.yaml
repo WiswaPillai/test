@@ -16,7 +16,7 @@ steps:
         apt-get update && apt-get install -y openssh-client
 
         echo "Writing private key to file..."
-        printf "%s" "$EC2_KEY" > ec2_key.pem
+        printf "%s" "$aws-ec2-private-key" > ec2_key.pem
         chmod 600 ec2_key.pem
 
         # Copy project files to EC2'
