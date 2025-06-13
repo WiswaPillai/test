@@ -16,9 +16,15 @@ steps:
         apt-get update && apt-get install -y openssh-client
 
         echo "Writing private key to file..."
-        cat > ec2_key.pem <<EOF
-        $aws-ec2-private-key
-        EOF
+        echo "$aws-ec2-private-key" | base64 -d > ec2_key.pem
+  if [[ ! -s ec2_key.pem ]] || ! grep -q "BEGIN .*PRIVATE KEY" ec2_key.pem; then
+           echo "❌ Failed to decode and write the private key. Exiting build."
+        exit 1
+  fi
+
+         echo "✅ Private key written successfully:"
+        cat ec2_key.pem
+
         chmod 600 ec2_key.pem
 
         # Copy project files to EC2'
