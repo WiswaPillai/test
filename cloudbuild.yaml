@@ -15,7 +15,8 @@ steps:
       - |
         apt-get update && apt-get install -y openssh-client
 
-        echo "$aws-ec2-private-key" > ec2_key.pem
+        echo "Writing private key to file..."
+        printf "%s" "$EC2_KEY" > ec2_key.pem
         chmod 600 ec2_key.pem
 
         # Copy project files to EC2'
@@ -23,12 +24,12 @@ steps:
         scp -i ec2_key.pem -o StrictHostKeyChecking=no -r test gcpuser@3.111.188.92:/home/gcpuser/app
         echo 'Files copied to EC2 instance.'
 
-        ssh -i ec2_key.pem -o StrictHostKeyChecking=no gcpuser@3.111.188.92 '
-          git pull origin main &&
-          docker-compose up -d --build
+        echo 'Running deploy commands on EC2...'
+        ssh -i ec2_key.pem -o StrictHostKeyChecking=no gcpuser@3.111.188.92 <<EOF
+          cd /home/gcpuser/app
+          npm install
           echo "Deployment completed successfully."
-        exit 0
-        '
+        EOF
 
 availableSecrets:
   secretManager:
