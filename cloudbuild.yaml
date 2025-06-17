@@ -39,10 +39,6 @@ steps:
           echo "Deployment completed successfully."
         EOF
 
-availableSecrets:
-  secretManager:
-    - versionName: projects/common-tools-265603/secrets/aws-ec2-private-key/versions/latest
-      env: aws-ec2-private-key
 
 options:
   logging: CLOUD_LOGGING_ONLY
