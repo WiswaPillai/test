@@ -8,7 +8,7 @@ steps:
     args: ['install']
 
   - name: 'ubuntu'
-    secretEnv: ['aws-ec2-private-key']
+    secretEnv: ['tkz_dev_key']
     entrypoint: 'bash'
     args:
       - -c
@@ -16,7 +16,7 @@ steps:
         apt-get update && apt-get install -y openssh-client
 
         echo "Writing private key to file..."
-        echo "$aws-ec2-private-key" | base64 -d > ec2_key.pem
+        echo "$tkz_dev_key" | base64 -d > ec2_key.pem
   if [[ ! -s ec2_key.pem ]] || ! grep -q "BEGIN .*PRIVATE KEY" ec2_key.pem; then
            echo "❌ Failed to decode and write the private key. Exiting build."
         exit 1
